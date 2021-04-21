@@ -9,7 +9,7 @@ const levels = {
 }
 
 // To change level
-const currentLevel = levels.easy;
+const currentLevel = levels.medium;
 
 // Global variables
 let time = currentLevel;
@@ -23,6 +23,7 @@ const scoreDisplay = document.querySelector('#score');
 const timeDisplay = document.querySelector('#time');
 const message = document.querySelector('#message');
 const seconds = document.querySelector('#seconds');
+const highscoreDisplay = document.querySelector('#highscore');
 
 // array of random words
 const words = [
@@ -58,7 +59,7 @@ const words = [
 
     // Show number of seconds in UI
     seconds.innerHTML = currentLevel;
-    
+
     // Load word from array
     showWord(words);
     
@@ -80,6 +81,18 @@ const words = [
         showWord(words);
         wordInput.value = '';
         score++;
+      }
+
+      // Highscore based on score value for Session Storage
+      if(typeof sessionStorage['highscore'] === 'undefined' || score > sessionStorage['highscore']){
+          sessionStorage['highscore'] = score;
+      } else{
+        sessionStorage['highscore'] = sessionStorage['highscore'];
+      }
+
+      // Prevent display of High Score: -1
+      if (sessionStorage['highscore'] >= 0){
+          highscoreDisplay.innerHTML = sessionStorage['highscore'];
       }
       
       // If the score is -1 display 0
